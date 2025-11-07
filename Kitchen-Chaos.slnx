@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="CodeMonkeyFreeEditor.csproj" />
+  <Project Path="CodeMonkeyFree.csproj" />
+</Solution>

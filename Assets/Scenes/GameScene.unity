@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   moveSpeed: 5
-  rotationSpeed: 10
+  rotationSpeed: 50
   gameInput: {fileID: 1418148809}
   countersLayerMask:
     serializedVersion: 2

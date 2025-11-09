@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,18 +12,17 @@ public class Player : MonoBehaviour
     private bool isWalking;
     private Vector3 lastInteractDir;
 
-    private void Update()
+    private void Start()
     {
-        HandleMovement();
-        HandleInteractions();
+        gameInput.OnInteractAction += GameInput_OnInteractAction;
     }
 
-    private void HandleInteractions()
+    private void GameInput_OnInteractAction(object sender, EventArgs e)
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
         // Calculate move direction based on input
-        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y).normalized;
+        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
         if (moveDir != Vector3.zero)
         {
@@ -30,19 +30,25 @@ public class Player : MonoBehaviour
         }
 
         float interactDistance = 2f;
+        Debug.DrawRay(transform.position, lastInteractDir * interactDistance, Color.red, 15f);
         if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
+                Debug.Log("Interacting with " + raycastHit.transform.name);
                 clearCounter.Interact();
             }
         }
         else
         {
-            Debug.Log("-");
+            // No counter detected
         }
+    }
 
-
+    private void Update()
+    {
+        HandleMovement();
+        HandleInteractions();
     }
 
     private void HandleMovement()
@@ -50,7 +56,10 @@ public class Player : MonoBehaviour
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
         // Calculate move direction based on input
-        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y).normalized;
+        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
+
+        if (moveDir != Vector3.zero)
+            transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotationSpeed);
 
         // Calculate the distance travelled per frame
         float moveDistance = Time.deltaTime * moveSpeed;
@@ -79,9 +88,20 @@ public class Player : MonoBehaviour
 
         transform.position += moveDir * moveDistance;
 
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotationSpeed);
-
         isWalking = moveDir != Vector3.zero;
+    }
+
+    private void HandleInteractions()
+    {
+        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+
+        // Calculate move direction based on input
+        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
+
+        if (moveDir != Vector3.zero)
+        {
+            lastInteractDir = moveDir;
+        }
     }
 
     public bool IsWalking()

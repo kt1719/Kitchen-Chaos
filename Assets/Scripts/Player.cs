@@ -6,18 +6,49 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private LayerMask countersLayerMask;
 
     private bool isWalking;
+    private Vector3 lastInteractDir;
 
     private void Update()
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
-
-        Move(inputVector);
+        HandleMovement();
+        HandleInteractions();
     }
 
-    private void Move(Vector2 inputVector)
+    private void HandleInteractions()
     {
+        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+
+        // Calculate move direction based on input
+        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y).normalized;
+
+        if (moveDir != Vector3.zero)
+        {
+            lastInteractDir = moveDir;
+        }
+
+        float interactDistance = 2f;
+        if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
+        {
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            {
+                clearCounter.Interact();
+            }
+        }
+        else
+        {
+            Debug.Log("-");
+        }
+
+
+    }
+
+    private void HandleMovement()
+    {
+        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+
         // Calculate move direction based on input
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y).normalized;
 

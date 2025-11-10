@@ -67,5 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Kitchen-Chaos.slnx"
+    "dotnet.defaultSolution": "Kitchen-Chaos.slnx",
+    "idf.pythonInstallPath": "C:\\Users\\Khayle\\.espressif\\tools\\idf-python\\3.11.2\\python.exe"
 }

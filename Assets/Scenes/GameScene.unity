@@ -294,6 +294,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1 &400530275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9219831736266658297, guid: 14aed4057020e4c4bbb7a74313f10387, type: 3}
+  m_PrefabInstance: {fileID: 722286837}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &722286837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342,6 +347,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4636628611917452628, guid: 14aed4057020e4c4bbb7a74313f10387, type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ebd1fbf60845384db734a63ff3bf728, type: 2}
     - target: {fileID: 9219831736266658297, guid: 14aed4057020e4c4bbb7a74313f10387, type: 3}
       propertyPath: m_Name
       value: ClearCounter (1)
@@ -961,6 +970,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4636628611917452628, guid: 14aed4057020e4c4bbb7a74313f10387, type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 19872f5f2bfbac9459c85dee021eaae8, type: 2}
+    - target: {fileID: 4636628611917452628, guid: 14aed4057020e4c4bbb7a74313f10387, type: 3}
+      propertyPath: secondClearCounterObject
+      value: 
+      objectReference: {fileID: 400530275}
     - target: {fileID: 9219831736266658297, guid: 14aed4057020e4c4bbb7a74313f10387, type: 3}
       propertyPath: m_Name
       value: ClearCounter

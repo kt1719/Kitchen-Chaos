@@ -108,19 +108,20 @@ public class Player : MonoBehaviour
         }
 
         float interactDistance = 2f;
+        ClearCounter currentCounter = null;
         if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
-            selectedCounter = raycastHit.transform.GetComponent<ClearCounter>();
+            currentCounter = raycastHit.transform.GetComponent<ClearCounter>();
         }
-        else
-        {
-            selectedCounter = null;
-        }
-        SetSelectedCounter(selectedCounter);
+        SetSelectedCounter(currentCounter);
     }
 
     private void SetSelectedCounter(ClearCounter clearCounter)
     {
+        if (selectedCounter == clearCounter)
+        {
+            return;
+        }
         selectedCounter = clearCounter;
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs

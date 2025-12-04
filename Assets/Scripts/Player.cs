@@ -9,7 +9,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs // This extends EventArgs so we can use it in our event to pass data
     {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     }
 
     // Serialized Fields
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private bool isWalking;
     private Vector3 lastInteractDir;
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
     private KitchenObject kitchenObject;
 
     private void Awake()
@@ -110,21 +110,21 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         }
 
         float interactDistance = 2f;
-        ClearCounter currentCounter = null;
+        BaseCounter currentCounter = null;
         if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
-            currentCounter = raycastHit.transform.GetComponent<ClearCounter>();
+            currentCounter = raycastHit.transform.GetComponent<BaseCounter>();
         }
         SetSelectedCounter(currentCounter);
     }
 
-    private void SetSelectedCounter(ClearCounter clearCounter)
+    private void SetSelectedCounter(BaseCounter BaseCounter)
     {
-        if (selectedCounter == clearCounter)
+        if (selectedCounter == BaseCounter)
         {
             return;
         }
-        selectedCounter = clearCounter;
+        selectedCounter = BaseCounter;
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
         {

@@ -10,8 +10,12 @@ public class ContainerCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-        GameObject instantiatedKitchenObject = Instantiate(kitchenObjectSO.prefab);
-        instantiatedKitchenObject.GetComponent<KitchenObject>().SetKitchenObjectParent(player);
+        if (player.HasKitchenObject())
+        {
+            // Player is carrying something, do nothing
+            return;
+        }
+        KitchenObject kitchenObject = KitchenObject.SpawnKitchenObject(kitchenObjectSO, player);
         
         OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
     }

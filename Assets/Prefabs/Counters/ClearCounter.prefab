@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5468513107440458990, guid: 63c63ec6a5f081d46a08acae82be9c3f, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9219831736266658297, guid: 63c63ec6a5f081d46a08acae82be9c3f, type: 3}
       propertyPath: m_Name
       value: ClearCounter
@@ -149,7 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ab66f7f415c44058ce9ec793ba91d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClearCounter
-  kitchenObjectSO: {fileID: 11400000, guid: 19872f5f2bfbac9459c85dee021eaae8, type: 2}
   counterTopPoint: {fileID: 6396122652726979850}
 --- !u!4 &6396122652726979850 stripped
 Transform:

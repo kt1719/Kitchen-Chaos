@@ -12,6 +12,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         public BaseCounter selectedCounter;
     }
 
+    public Vector3 pos;
+
     // Serialized Fields
 
     [SerializeField] private float moveSpeed = 5f;
@@ -41,6 +43,15 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+    }
+
+    private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
+    {
+        if (selectedCounter != null)
+        {
+            selectedCounter.InteractAlternate(this);
+        }
     }
 
     private void GameInput_OnInteractAction(object sender, EventArgs e)
@@ -74,20 +85,38 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         float playerRadius = 0.7f;
         float playerHeight = 2f;
 
-        // Calculate the canMove in the x direction
-        Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
-        bool canMoveX = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, Mathf.Abs(moveDir.x) * moveDistance);
-        if (!canMoveX)
+        // Have to do both directions first as there is an edge case where both X and Z are blocked but diagonally it is free
+        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
+        if (!canMove)
         {
-            moveDir.x = 0;
-        }
+            // Cannot move towards moveDir
 
-        // Calculate the canMove in the z direction
-        Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
-        bool canMoveZ = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, Mathf.Abs(moveDir.z) * moveDistance);
-        if (!canMoveZ)
-        {
-            moveDir.z = 0;
+            // Attempt only X movement
+            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
+            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, Mathf.Abs(moveDir.x) * moveDistance);
+
+            if (canMove)
+            {
+                // Can move only in the X direction
+                moveDir.z = 0;
+            }
+            else
+            {
+                // Attempt only Z movement
+                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
+                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, Mathf.Abs(moveDir.z) * moveDistance);
+
+                if (canMove)
+                {
+                    // Can move only in the Z direction
+                    moveDir.x = 0;
+                }
+                else
+                {
+                    // Cannot move in either direction
+                    moveDir = Vector3.zero;
+                }
+            }
         }
 
         ///////////////////////////////////////////////////

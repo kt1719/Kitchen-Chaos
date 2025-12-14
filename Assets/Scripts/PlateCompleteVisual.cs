@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlateCompleteVisual : MonoBehaviour
@@ -13,6 +14,14 @@ public class PlateCompleteVisual : MonoBehaviour
 
     [SerializeField] private PlateKitchenObject plateKitchenObject;
     [SerializeField] private List<KitchenObjectSO_GameObject> kitchenObjectSO_GameObjects;
+    [SerializeField] private PlateCompleteVisualObjectHelper plateCompleteVisualObjectHelper;
+
+    private List<KitchenObjectSO_GameObject> currentActiveIngredients;
+
+    private void Awake()
+    {
+        currentActiveIngredients = new List<KitchenObjectSO_GameObject>();
+    }
 
     private void Start()
     {
@@ -22,6 +31,8 @@ public class PlateCompleteVisual : MonoBehaviour
         {
             kitchenObjectSO_GameObject.gameObject.SetActive(false);
         }
+
+        plateCompleteVisualObjectHelper.RecordKitchenObjectBaseHeights(kitchenObjectSO_GameObjects);
     }
 
     private void PlateKitchenObject_OnIngredientAdded(object sender, PlateKitchenObject.PlateIngredientAddedEventArgs e)
@@ -31,7 +42,19 @@ public class PlateCompleteVisual : MonoBehaviour
             if (kitchenObjectSO_GameObject.kitchenObjectSO == e.kitchenObjectSO)
             {
                 kitchenObjectSO_GameObject.gameObject.SetActive(true);
+                currentActiveIngredients.Add(kitchenObjectSO_GameObject);
             }
+        }
+
+        foreach (KitchenObjectSO_GameObject ingredient in currentActiveIngredients)
+        {
+            float height = plateCompleteVisualObjectHelper.CalculateHeight(ingredient.kitchenObjectSO, currentActiveIngredients.ConvertAll(i => i.kitchenObjectSO));
+            ingredient.gameObject.transform.localPosition = 
+            new Vector3(
+                ingredient.gameObject.transform.localPosition.x, 
+                height, 
+                ingredient.gameObject.transform.localPosition.z
+            );
         }
     }
 }

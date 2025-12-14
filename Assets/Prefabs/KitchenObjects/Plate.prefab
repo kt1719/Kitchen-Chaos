@@ -168,6 +168,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateCompleteVisual
       objectReference: {fileID: 0}
+    - target: {fileID: 408889407006782757, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259373168199284308, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.187
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259373168199284308, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.365
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707550894988254, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.076
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707550894988255, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707551136013322, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.076
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707551136013323, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707552375629788, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707552375629789, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707552397226384, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.076
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707552397226385, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550707552663613203, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3611271270719445376, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3611271270719445377, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679838792740492226, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -175,6 +235,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 408889407006782757, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 711625231364945763}
+    - targetCorrespondingSourceObject: {fileID: 408889407006782757, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7796881126673682218}
   m_SourcePrefab: {fileID: 100100000, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}
 --- !u!4 &4798721001291746522 stripped
 Transform:
@@ -212,6 +275,45 @@ MonoBehaviour:
     gameObject: {fileID: 8535012167187056751}
   - kitchenObjectSO: {fileID: 11400000, guid: e1ad70defd184f546bbcfb4e0fda5b11, type: 2}
     gameObject: {fileID: 8442281153996710015}
+  plateCompleteVisualObjectHelper: {fileID: 7796881126673682218}
+--- !u!114 &7796881126673682218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4798721001291746523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14da86498ffeba7438bae704fb378fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlateCompleteVisualObjectHelper
+  kitchenObjectSO_OffsetHeights:
+  - kitchenObjectSO: {fileID: 11400000, guid: 308a7e5d3a8b145879a388eb8b756b9d, type: 2}
+    height: 0.139
+  - kitchenObjectSO: {fileID: 11400000, guid: e1ad70defd184f546bbcfb4e0fda5b11, type: 2}
+    height: 0.1
+  - kitchenObjectSO: {fileID: 11400000, guid: 6a1453db23bcdfa4080d01739e4038c7, type: 2}
+    height: 0.1
+  - kitchenObjectSO: {fileID: 11400000, guid: 733870381566a4695a216670a907bf80, type: 2}
+    height: 0.018
+  - kitchenObjectSO: {fileID: 11400000, guid: 5c4e5fa6c21a5418bb9977d7877c15b7, type: 2}
+    height: 0.04
+  - kitchenObjectSO: {fileID: 11400000, guid: ea6208a449fa5456a92ecfefcf7cee35, type: 2}
+    height: 0
+  kitchenObjectSO_Ranks:
+  - kitchenObjectSO: {fileID: 11400000, guid: 308a7e5d3a8b145879a388eb8b756b9d, type: 2}
+    rank: 0
+  - kitchenObjectSO: {fileID: 11400000, guid: e1ad70defd184f546bbcfb4e0fda5b11, type: 2}
+    rank: 1
+  - kitchenObjectSO: {fileID: 11400000, guid: 6a1453db23bcdfa4080d01739e4038c7, type: 2}
+    rank: 1
+  - kitchenObjectSO: {fileID: 11400000, guid: 733870381566a4695a216670a907bf80, type: 2}
+    rank: 2
+  - kitchenObjectSO: {fileID: 11400000, guid: 5c4e5fa6c21a5418bb9977d7877c15b7, type: 2}
+    rank: 3
+  - kitchenObjectSO: {fileID: 11400000, guid: ea6208a449fa5456a92ecfefcf7cee35, type: 2}
+    rank: 4
 --- !u!1 &8442281153996710015 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3611271270719445377, guid: 10e39c981f2de6441b54efde32ced8f0, type: 3}

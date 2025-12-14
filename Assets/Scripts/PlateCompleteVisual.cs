@@ -15,14 +15,6 @@ public class PlateCompleteVisual : MonoBehaviour
     [SerializeField] private PlateKitchenObject plateKitchenObject;
     [SerializeField] private List<KitchenObjectSO_GameObject> kitchenObjectSO_GameObjects;
     [SerializeField] private PlateCompleteVisualObjectHelper plateCompleteVisualObjectHelper;
-
-    private List<KitchenObjectSO_GameObject> currentActiveIngredients;
-
-    private void Awake()
-    {
-        currentActiveIngredients = new List<KitchenObjectSO_GameObject>();
-    }
-
     private void Start()
     {
         plateKitchenObject.OnIngredientAdded += PlateKitchenObject_OnIngredientAdded;
@@ -42,19 +34,33 @@ public class PlateCompleteVisual : MonoBehaviour
             if (kitchenObjectSO_GameObject.kitchenObjectSO == e.kitchenObjectSO)
             {
                 kitchenObjectSO_GameObject.gameObject.SetActive(true);
-                currentActiveIngredients.Add(kitchenObjectSO_GameObject);
             }
         }
 
-        foreach (KitchenObjectSO_GameObject ingredient in currentActiveIngredients)
+        List<KitchenObjectSO> kitchenObjectSOlist = plateKitchenObject.GetKitchenObjectSOList();
+        foreach (KitchenObjectSO kitchenObjectSO in kitchenObjectSOlist)
         {
-            float height = plateCompleteVisualObjectHelper.CalculateHeight(ingredient.kitchenObjectSO, currentActiveIngredients.ConvertAll(i => i.kitchenObjectSO));
-            ingredient.gameObject.transform.localPosition = 
-            new Vector3(
-                ingredient.gameObject.transform.localPosition.x, 
+            // Calculate the height of the visual object
+            float height = plateCompleteVisualObjectHelper.CalculateHeight(kitchenObjectSO, kitchenObjectSOlist);
+            
+            // Get the gameObject reference
+            GameObject kitchenObjectSOGameObject = getKitchenObjectGameObjectReference(kitchenObjectSO);
+            kitchenObjectSOGameObject.gameObject.transform.localPosition = new Vector3(
+                kitchenObjectSOGameObject.gameObject.transform.localPosition.x, 
                 height, 
-                ingredient.gameObject.transform.localPosition.z
+                kitchenObjectSOGameObject.gameObject.transform.localPosition.z
             );
         }
+    }
+
+    private GameObject getKitchenObjectGameObjectReference(KitchenObjectSO kitchenObjectSO)
+    {
+        foreach (KitchenObjectSO_GameObject kitchenObjectSO_GameObject in kitchenObjectSO_GameObjects)
+        {
+            if (kitchenObjectSO_GameObject.kitchenObjectSO == kitchenObjectSO)
+                return kitchenObjectSO_GameObject.gameObject; 
+        }
+        Debug.LogError("KitchenObjectSO GameObject reference not found for: " + kitchenObjectSO.name);
+        return null;
     }
 }

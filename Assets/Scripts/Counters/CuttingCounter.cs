@@ -28,6 +28,11 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
             {
                 // Player is not carrying anything, give them the kitchen object
                 GetKitchenObject().SetKitchenObjectParent(player);
+
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = 0f
+                });
             }
         } 
         else

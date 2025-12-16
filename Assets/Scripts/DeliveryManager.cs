@@ -7,6 +7,8 @@ public class DeliveryManager : MonoBehaviour
 {
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFailed;
 
     public static DeliveryManager Instance { get; private set; }
     [SerializeField] private RecipeListSO recipeListSO;
@@ -54,6 +56,7 @@ public class DeliveryManager : MonoBehaviour
                     Debug.Log("Player delivered the correct recipe!");
                     waitingRecipeSOList.Remove(waitingRecipeSO);
                     OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
+                    OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
                     return;
                 }
                 else
@@ -63,6 +66,7 @@ public class DeliveryManager : MonoBehaviour
             }
         }
         Debug.Log("No recipes Match!");
+        OnRecipeFailed?.Invoke(this, EventArgs.Empty);
     }
 
     private bool RecipeSOContainsAllIngredients(RecipeSO recipeSO, List<KitchenObjectSO> kitchenObjectSOList)

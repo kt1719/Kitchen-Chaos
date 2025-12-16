@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class DeliveryManager : MonoBehaviour
     private List<RecipeSO> waitingRecipeSOList;
     private float spawnRecipeTimerMax = 4f;
     private int waitingRecipeSOListMax = 4;
+    private int successFulRecipesAmount = 0;
 
     private void Awake()
     {
@@ -57,6 +59,7 @@ public class DeliveryManager : MonoBehaviour
                     waitingRecipeSOList.Remove(waitingRecipeSO);
                     OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                     OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
+                    successFulRecipesAmount++;
                     return;
                 }
                 else
@@ -84,5 +87,10 @@ public class DeliveryManager : MonoBehaviour
     public List<RecipeSO> GetWaitingRecipeSOList()
     {
         return waitingRecipeSOList;
+    }
+
+    public int GetSuccessfulRecipesAmount()
+    {
+        return successFulRecipesAmount;
     }
 }

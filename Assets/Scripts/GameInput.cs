@@ -1,13 +1,27 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
+    private const string PLAYER_PREFS_BINDINGS = "InputBindings";
+
     public static GameInput Instance { get; private set; }
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnPauseAction;
+
+    public enum Binding
+    {
+        Move_Up,
+        Move_Down,
+        Move_Left,
+        Move_Right,
+        Interact,
+        InteractAlternate,
+        Pause
+    }
 
     private PlayerInputActions playerInputActions;
     private void Awake()
@@ -19,6 +33,11 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Interact.performed += Interact_performed;
         playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
         playerInputActions.Player.Pause.performed += Pause_performed;
+
+        if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS))
+        {
+            playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
+        }
     }
 
     private void OnDestroy()
@@ -52,5 +71,82 @@ public class GameInput : MonoBehaviour
 
         inputVector.Normalize();
         return inputVector;
+    }
+
+    public string GetBindingText(Binding binding)
+    {
+        switch (binding)
+        {
+            default:
+            case Binding.Interact:
+                return playerInputActions.Player.Interact.bindings[0].ToDisplayString();
+            case Binding.InteractAlternate:
+                return playerInputActions.Player.InteractAlternate.bindings[0].ToDisplayString();
+            case Binding.Pause:
+                return playerInputActions.Player.Pause.bindings[0].ToDisplayString();
+            case Binding.Move_Up:
+                return playerInputActions.Player.Move.bindings[1].ToDisplayString();
+            case Binding.Move_Down:
+                return playerInputActions.Player.Move.bindings[2].ToDisplayString();
+            case Binding.Move_Left:
+                return playerInputActions.Player.Move.bindings[3].ToDisplayString();
+            case Binding.Move_Right:
+                return playerInputActions.Player.Move.bindings[4].ToDisplayString();
+            
+        }
+    }
+
+    public void RebindBinding(Binding binding, Action onActionRebound)
+    {
+        playerInputActions.Player.Disable();
+
+        InputAction inputAction;
+        int rebindingIndex;
+
+        switch (binding)
+        {
+            default:
+            case Binding.Move_Up:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 1;
+                break;
+            case Binding.Move_Down:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 2;
+                break;
+            case Binding.Move_Left:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 3;
+                break;
+            case Binding.Move_Right:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 4;
+                break;
+            case Binding.Interact:
+                inputAction = playerInputActions.Player.Interact;
+                rebindingIndex = 0;
+                break;
+            case Binding.InteractAlternate:
+                inputAction = playerInputActions.Player.InteractAlternate;
+                rebindingIndex = 0;
+                break;
+            case Binding.Pause:
+                inputAction = playerInputActions.Player.Pause;
+                rebindingIndex = 0;
+                break;
+        }
+
+        inputAction.PerformInteractiveRebinding(rebindingIndex)
+            .OnComplete(callback => RebindComplete(callback, onActionRebound))
+            .Start();
+    }
+
+    private void RebindComplete(InputActionRebindingExtensions.RebindingOperation callback, Action onActionRebound)
+    {
+        callback.Dispose();
+        playerInputActions.Player.Enable();
+        onActionRebound();
+        
+        PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
     }
 }

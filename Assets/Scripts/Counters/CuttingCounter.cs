@@ -5,6 +5,11 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
 {
     public static event EventHandler OnAnyCut;
 
+    new public static void ResetStaticData()
+    {
+        OnAnyCut = null;
+    }
+
     public event EventHandler OnCut;
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
 

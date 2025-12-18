@@ -13,8 +13,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         public BaseCounter selectedCounter;
     }
 
-    public Vector3 pos;
-
     // Serialized Fields
 
     [SerializeField] private float moveSpeed = 5f;

@@ -30,10 +30,10 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moveRightText;
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private TextMeshProUGUI interactAltText;
-    [SerializeField] private TextMeshProUGUI pausetext;
+    [SerializeField] private TextMeshProUGUI pauseText;
     [SerializeField] private TextMeshProUGUI interactTextGamepad;
     [SerializeField] private TextMeshProUGUI interactAltTextGamepad;
-    [SerializeField] private TextMeshProUGUI pausetextGamepad;
+    [SerializeField] private TextMeshProUGUI pauseTextGamepad;
     [SerializeField] private Transform pressToRebindKeyTransform;
 
     private Action onCloseButtonAction; 
@@ -126,10 +126,10 @@ public class OptionsUI : MonoBehaviour
         moveRightText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Move_Right);
         interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Interact);
         interactAltText.text = GameInput.Instance.GetBindingText(GameInput.Binding.InteractAlternate);
-        pausetext.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
+        pauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
         interactTextGamepad.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Interact);
         interactAltTextGamepad.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_InteractAlternate);
-        pausetextGamepad.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Pause);
+        pauseTextGamepad.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Pause);
     }
 
     public void Show(Action onCloseButtonAction)

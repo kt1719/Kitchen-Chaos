@@ -26,6 +26,12 @@ public class SoundManager : MonoBehaviour
         BaseCounter.OnAnyObjectPlaced += BaseCounter_OnAnyObjectPlaced;
         TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyObjectTrashed;
         PlayerSounds.OnPlayFootstepFX += PlayerSounds_OnPlayFootstepFX;
+        GameStartCountDownUI.OnCountdownNumberChange += GameStartCountDownUI_OnCountdownNumberChange;
+    }
+
+    private void GameStartCountDownUI_OnCountdownNumberChange(object sender, EventArgs e)
+    {
+        PlayCountdownSound();
     }
 
     private void PlayerSounds_OnPlayFootstepFX(object sender, EventArgs e)
@@ -75,6 +81,11 @@ public class SoundManager : MonoBehaviour
     private void PlaySound(AudioClip audioClip, Vector3 position, float volume = 1f)
     {
         AudioSource.PlayClipAtPoint(audioClip, position, volume);
+    }
+
+    private void PlayCountdownSound()
+    {
+        PlaySound(audioClipRefsSO.warning, Vector3.zero);
     }
 
     public void ChangeVolume()

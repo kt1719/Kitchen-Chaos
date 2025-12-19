@@ -43,7 +43,6 @@ public class StoveCounter : BaseCounter, IHasProgress
                     break;
                 case State.Frying:
                     fryingTimer += Time.deltaTime;
-                    InvokeProgressChanged(fryingTimer / fryingRecipeSO.fryingTimerMax);
                     if (fryingTimer > fryingRecipeSO.fryingTimerMax)
                     {
                         GetKitchenObject().DestroySelf();
@@ -55,10 +54,10 @@ public class StoveCounter : BaseCounter, IHasProgress
 
                         InvokeStateChanged();
                     }
+                    InvokeProgressChanged(fryingTimer / fryingRecipeSO.fryingTimerMax);
                     break;
                 case State.Fried:
                     burningTimer += Time.deltaTime;
-                    InvokeProgressChanged(burningTimer / burningRecipeSO.burningTimerMax);
                     if (burningTimer > burningRecipeSO.burningTimerMax)
                     {
                         GetKitchenObject().DestroySelf();
@@ -67,6 +66,7 @@ public class StoveCounter : BaseCounter, IHasProgress
                         state = State.Burned;
                         InvokeStateChanged();
                     }
+                    InvokeProgressChanged(burningTimer / burningRecipeSO.burningTimerMax);
                     break;
                 case State.Burned:
                     break;
@@ -163,5 +163,10 @@ public class StoveCounter : BaseCounter, IHasProgress
         {
             progressNormalized = progressNormalized
         });
+    }
+
+    public bool IsFried()
+    {
+        return state == State.Fried;
     }
 }

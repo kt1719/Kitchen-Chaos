@@ -20,7 +20,7 @@ public class KitchenGameManger : MonoBehaviour
     private State state;
     private float countDownToStartTimer = 3f;
     private float gamePlayingTimer;
-    private float gamePlayingTimerMax = 25f;
+    private float gamePlayingTimerMax = 50f;
     private bool isGamePaused = false;
 
     private void Awake()
